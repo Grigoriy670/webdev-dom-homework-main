@@ -30,6 +30,7 @@
         </div>
       </div>
     </div>
+        <pre id="log"></pre>
   </body>
 
   <script>
@@ -58,6 +59,7 @@
         const commentTextInput = document.getElementById('comment-text');
         const addCommentBtn = document.getElementById('add-comment');
         const commentsContainer = document.getElementById('comments-container');
+        const log = document.getElementById('log');
         
         // Функция для отображения комментариев
         function renderComments() {
@@ -101,6 +103,7 @@
             
             // Добавляем обработчик события для кнопки лайка
             const likeButton = commentElement.querySelector('.like-button');
+
             likeButton.addEventListener('click', () => toggleLike(comment.id));
             
             const removeBtn = commentElement.querySelector('.remove');
@@ -165,16 +168,20 @@
             }
         }
         
-        // Обработчик события для кнопки добавления комментария
-        addCommentBtn.addEventListener('click', addComment);
-        
-        // Обработчик события для поля ввода текста (добавление по Enter)
-        commentTextInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && e.ctrlKey) {
-                addComment();
-            }
-        });
-        
+      addCommentBtn.addEventListener('click', addComment);
+
+    commentTextInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && e.ctrlKey) {
+        addComment();
+    }
+    });
+
+    // Главный "DOMContentLoaded"
+    document.addEventListener('DOMContentLoaded', () => {
+    log.textContent += 'Страница загружена полностью!\n';
+    renderComments();
+    });
+
         // Инициализация
         renderComments();
     </script>
