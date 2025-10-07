@@ -80,8 +80,8 @@
         function createCommentElement(comment) {
             const commentElement = document.createElement('li');
             commentElement.addEventListener('click', () => {
-                authorInput.value = comment.author;
-                commentTextInput.value = `@${comment.author}, ${comment.text}\n`;
+                
+                commentTextInput.value = `@${comment.author}`;
                 commentTextInput.focus();
 
                 commentTextInput.setSelectionRange(
@@ -148,7 +148,7 @@
                 return;
             }
             
-            const cleanText = text.replace(/<[^>]*>?/gm, '');
+            const cleanText = text.replace(/<[^>]*>?/gm, '')
 
             const newComment = {
                 id: Date.now(), // используем timestamp как ID
