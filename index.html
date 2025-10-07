@@ -81,7 +81,7 @@
             const commentElement = document.createElement('li');
             commentElement.addEventListener('click', () => {
                 
-                commentTextInput.value = `@${comment.author}`;
+                commentTextInput.value = `@${comment.author}, ${comment.text}\n`;
                 commentTextInput.focus();
 
                 commentTextInput.setSelectionRange(
