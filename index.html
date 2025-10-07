@@ -136,6 +136,11 @@
                 hour: '2-digit',
                 minute: '2-digit'
             });
+        };
+
+
+        const sanitazeHtml = (value) => {
+            return value.replaceAll('<', "&lt;"). replaceAll('>', '&gt;')
         }
         
         // Функция для добавления комментария
@@ -148,12 +153,12 @@
                 return;
             }
             
-            const cleanText = text.replace(/<[^>]*>?/gm, '')
+            
 
             const newComment = {
                 id: Date.now(), // используем timestamp как ID
-                author: author,
-                text: cleanText,
+                author: sanitazeHtml(author),
+                text: sanitazeHtml(text),
                 date: new Date().toISOString(),
                 likes: 0,
                 liked: false
