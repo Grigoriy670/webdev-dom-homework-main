@@ -45,7 +45,7 @@
                 liked: false
             },
             {
-                id: 1, // используем timestamp как ID
+                id: 1, 
                 author: 'Варвара Н.',
                 text: 'Мне нравится как офрмленна эта страница! 🤍',
                 date: new Date().toISOString(),
@@ -79,6 +79,16 @@
         // Функция для создания элемента комментария
         function createCommentElement(comment) {
             const commentElement = document.createElement('li');
+            commentElement.addEventListener('click', () => {
+                authorInput.value = comment.author;
+                commentTextInput.value = `@${comment.author}, ${comment.text}\n`;
+                commentTextInput.focus();
+
+                commentTextInput.setSelectionRange(
+                    commentTextInput.value.length,
+                    commentTextInput.value.length
+                );
+            })
             commentElement.className = 'comment';
             commentElement.dataset.id = comment.id;
             
@@ -104,10 +114,14 @@
             // Добавляем обработчик события для кнопки лайка
             const likeButton = commentElement.querySelector('.like-button');
 
-            likeButton.addEventListener('click', () => toggleLike(comment.id));
+            likeButton.addEventListener('click', (e) => {
+                e.stopPropagation()
+                toggleLike(comment.id)});
             
             const removeBtn = commentElement.querySelector('.remove');
-            removeBtn.addEventListener('click', () => removeComment(comment.id));
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation()
+                removeComment(comment.id)});
             
             return commentElement;
         }
@@ -134,10 +148,12 @@
                 return;
             }
             
+            const cleanText = text.replace(/<[^>]*>?/gm, '')
+
             const newComment = {
                 id: Date.now(), // используем timestamp как ID
                 author: author,
-                text: text,
+                text: cleanText,
                 date: new Date().toISOString(),
                 likes: 0,
                 liked: false
