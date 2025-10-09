@@ -18,7 +18,7 @@ export let comments = [
 ];
 
 export const sanitizeHtml = (value) => {
-  return value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  return value.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
 };
 
 
