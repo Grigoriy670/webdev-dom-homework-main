@@ -50,30 +50,3 @@ export function renderComments(comments, container, commentTextInput) {
         container.appendChild(li)
     })
 }
-
-
-export function rerender() {
-    renderComments(getSortedComments(), commentsContainer, commentTextInput)
-}
-
-addCommentBtn.addEventListener('click', () => {
-    const author = authorInput.value.trim()
-    const text = commentTextInput.value.trim()
-    const newComment = addComment(author, text)
-    if (newComment) {
-        authorInput.value = ''
-        commentTextInput.value = ''
-        rerender()
-    } else {
-        alert('Пожалуйста, заполните все поля')
-    }
-})
-
-commentTextInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && e.ctrlKey) addCommentBtn.click()
-})
-
-document.addEventListener('DOMContentLoaded', () => {
-    log.textContent += 'Страница загружена полностью!\n'
-    rerender()
-})
