@@ -23,7 +23,7 @@ const createCommentElement = (comment) => {
 
     commentElement.innerHTML = `
         <div class="comment-header">
-            <div>${comment.author}</div>
+            <div>${comment.author.name}</div>
             <div>${formatDate(comment.date)}</div>
         </div>
         <div class="comment-body">
@@ -47,21 +47,12 @@ const createCommentElement = (comment) => {
         renderComments()
     })
 
-    const removeBtn = commentElement.querySelector('.remove')
-    removeBtn.addEventListener('click', (e) => {
-        e.stopPropagation()
-        if (confirm('Вы уверены, что хотите удалить этот комментарий?')) {
-            removeComment(comment.id)
-            renderComments()
-        }
-    })
-
     return commentElement
 }
 
 const handleCommentClick = (comment) => {
     const commentTextInput = document.getElementById('comment-text')
-    commentTextInput.value = `@${comment.author}, ${comment.text}\n`
+    commentTextInput.value = `@${comment.author.name}, ${comment.text}\n`
     commentTextInput.focus()
     commentTextInput.setSelectionRange(
         commentTextInput.value.length,

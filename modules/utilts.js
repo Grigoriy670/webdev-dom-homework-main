@@ -1,3 +1,5 @@
+
+
 export const formatDate = (dateString) => {
     const date = new Date(dateString)
     return date.toLocaleString('ru-RU', {
@@ -12,3 +14,4 @@ export const formatDate = (dateString) => {
 export const sanitizeHtml = (value) => {
     return value.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
 }
+

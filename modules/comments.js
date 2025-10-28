@@ -1,21 +1,13 @@
-export let comments = [
-    {
-        id: 2,
-        author: 'Глеб Фокин',
-        text: 'Это будет первый комментарий на странице',
-        date: new Date().toISOString(),
-        likes: 3,
-        liked: false,
-    },
-    {
-        id: 1,
-        author: 'Варвара Н.',
-        text: 'Мне нравится как офрмленна эта страница! 🤍',
-        date: new Date().toISOString(),
-        likes: 75,
-        liked: true,
-    },
-]
+export let comments = []
+
+export const updateComments = (newComments) => {
+    if (!Array.isArray(newComments)) {
+        console.error('updateComments: новые комментарии должны быть массивом', newComments)
+        return
+    }
+    comments.length = 0
+    comments.push(...newComments)
+}
 
 export const addComment = (newComment) => {
     comments.unshift(newComment)
