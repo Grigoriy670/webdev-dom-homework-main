@@ -27,22 +27,42 @@ const handleAddComment = (authorInput, commentTextInput) => {
         alert('Пожалуйста, заполните все поля')
         return
     }
-document.querySelector('.form-loading').style.display = 'block'
-document.querySelector('.add-form').style.display = 'none'
+    document.querySelector('.form-loading').style.display = 'block'
+    document.querySelector('.add-form').style.display = 'none'
 
     postComment(sanitizeHtml(text), sanitizeHtml(author))
-    .then((data)=>{
+        .then((data) => {
+            document.querySelector('.form-loading').style.display = 'none'
+            document.querySelector('.add-form').style.display = 'flex'
 
-        document.querySelector('.form-loading').style.display = 'none'
-document.querySelector('.add-form').style.display = 'flex'
+            updateComments(data)
+            renderComments()
+            authorInput.value = ''
+            commentTextInput.value = ''
+        })
+        .catch((error) => {
+            
+            document.querySelector('.form-loading').style.display = 'none'
+            document.querySelector('.add-form').style.display = 'flex'
 
-        updateComments(data)
-        renderComments()
-        authorInput.value = ''
-        commentTextInput.value = ''
+            if (error.message === error.message) {
+                alert('Нет соединения с интернетом')
+            }
 
-    })
-    
+            if (error.message === 'Ошибка сервера') {
+                alert('Ошибка сервера')
+            }
 
-    
+            if (error.message === 'Неверный запрос') {
+                alert('Имя и комментарий должны быть не короче 3х символов')
+
+                authorInput.classList.add('-error')
+                commentTextInput.classList.add('-error')
+
+                setTimeout(() => {
+                    authorInput.classList.remove('-error')
+                    commentTextInput.classList.remove('-error')
+                }, 2000)
+            }
+        })
 }
