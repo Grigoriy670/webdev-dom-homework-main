@@ -14,7 +14,7 @@ export const fetchComments = () => {
                     date: new Date(comment.date),
                     text: comment.text,
                     likes: comment.likes,
-                    isLiked: false,
+                    liked: false,
                 }
             })
 

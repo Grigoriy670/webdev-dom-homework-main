@@ -53,7 +53,7 @@ const createCommentElement = (comment) => {
 
 const handleCommentClick = (comment) => {
     const commentTextInput = document.getElementById('comment-text')
-    commentTextInput.value = `@${comment.author}, ${comment.text}\n`
+    commentTextInput.value = `@${comment.name}, ${comment.text}\n`
     commentTextInput.focus()
     commentTextInput.setSelectionRange(
         commentTextInput.value.length,
