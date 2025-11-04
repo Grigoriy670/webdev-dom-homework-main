@@ -1,21 +1,4 @@
-export let comments = [
-    {
-        id: 2,
-        author: 'Глеб Фокин',
-        text: 'Это будет первый комментарий на странице',
-        date: new Date().toISOString(),
-        likes: 3,
-        liked: false,
-    },
-    {
-        id: 1,
-        author: 'Варвара Н.',
-        text: 'Мне нравится как офрмленна эта страница! 🤍',
-        date: new Date().toISOString(),
-        likes: 75,
-        liked: true,
-    },
-]
+export let comments = []
 
 export const addComment = (newComment) => {
     comments.unshift(newComment)
@@ -31,4 +14,8 @@ export const toggleLike = (commentId) => {
         comment.liked = !comment.liked
         comment.likes += comment.liked ? 1 : -1
     }
+}
+
+export const updateComments = (newComments) => {
+    comments = newComments
 }

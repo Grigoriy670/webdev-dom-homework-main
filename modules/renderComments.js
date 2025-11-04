@@ -23,7 +23,7 @@ const createCommentElement = (comment) => {
 
     commentElement.innerHTML = `
         <div class="comment-header">
-            <div>${comment.author}</div>
+            <div>${comment.name}</div>
             <div>${formatDate(comment.date)}</div>
         </div>
         <div class="comment-body">

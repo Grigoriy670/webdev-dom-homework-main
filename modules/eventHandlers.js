@@ -1,6 +1,7 @@
-import { comments, addComment } from './comments.js'
+import { comments, addComment, updateComments } from './comments.js'
 import { sanitizeHtml } from './utilts.js'
 import { renderComments } from './renderComments.js'
+import { postComment } from './api.js'
 
 export const initEventHandlers = () => {
     const authorInput = document.getElementById('author')
@@ -27,18 +28,15 @@ const handleAddComment = (authorInput, commentTextInput) => {
         return
     }
 
-    const newComment = {
-        id: Date.now(),
-        author: sanitizeHtml(author),
-        text: sanitizeHtml(text),
-        date: new Date().toISOString(),
-        likes: 0,
-        liked: false,
-    }
+    postComment(sanitizeHtml(text), sanitizeHtml(author))
+    .then((data)=>{
+        updateComments(data)
+        renderComments()
+        authorInput.value = ''
+        commentTextInput.value = ''
 
-    addComment(newComment)
-    renderComments()
+    })
+    
 
-    authorInput.value = ''
-    commentTextInput.value = ''
+    
 }

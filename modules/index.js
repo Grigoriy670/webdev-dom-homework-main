@@ -1,5 +1,7 @@
 import { renderComments } from './renderComments.js'
 import { initEventHandlers } from './eventHandlers.js'
+import { fetchComments } from './api.js'
+import { updateComments } from './comments.js'
 
 document.addEventListener('DOMContentLoaded', () => {
     const log = document.getElementById('log')
@@ -9,4 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderComments()
     initEventHandlers()
+})
+fetchComments().then((data) => {
+    updateComments(data)
+    renderComments()
 })
