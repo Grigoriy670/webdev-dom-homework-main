@@ -27,9 +27,15 @@ const handleAddComment = (authorInput, commentTextInput) => {
         alert('Пожалуйста, заполните все поля')
         return
     }
+document.querySelector('.form-loading').style.display = 'block'
+document.querySelector('.add-form').style.display = 'none'
 
     postComment(sanitizeHtml(text), sanitizeHtml(author))
     .then((data)=>{
+
+        document.querySelector('.form-loading').style.display = 'none'
+document.querySelector('.add-form').style.display = 'flex'
+
         updateComments(data)
         renderComments()
         authorInput.value = ''

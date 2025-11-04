@@ -1,11 +1,11 @@
-import { comments, toggleLike, removeComment } from './comments.js'
+import { comments, toggleLike } from './comments.js'
 import { formatDate } from './utilts.js'
 
 const commentsContainer = document.getElementById('comments-container')
 
 export const renderComments = () => {
     commentsContainer.innerHTML = ''
-
+    
     const sortedComments = [...comments].sort(
         (a, b) => new Date(b.date) - new Date(a.date),
     )
@@ -18,6 +18,7 @@ export const renderComments = () => {
 
 const createCommentElement = (comment) => {
     const commentElement = document.createElement('li')
+    
     commentElement.className = 'comment'
     commentElement.dataset.id = comment.id
 
@@ -45,15 +46,6 @@ const createCommentElement = (comment) => {
         e.stopPropagation()
         toggleLike(comment.id)
         renderComments()
-    })
-
-    const removeBtn = commentElement.querySelector('.remove')
-    removeBtn.addEventListener('click', (e) => {
-        e.stopPropagation()
-        if (confirm('Вы уверены, что хотите удалить этот комментарий?')) {
-            removeComment(comment.id)
-            renderComments()
-        }
     })
 
     return commentElement

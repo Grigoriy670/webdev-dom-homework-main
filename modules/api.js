@@ -1,4 +1,4 @@
-// import { comments } from './comments'
+
 
 const host = ' https://wedev-api.sky.pro/api/v1/grigoriy-volovik'
 
