@@ -45,7 +45,5 @@ export const postComment = (text, name) => {
 
         
 
-    }).then(() => {
-        return fetchComments()
     })
 }

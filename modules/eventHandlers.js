@@ -1,7 +1,7 @@
 import { updateComments } from './comments.js'
 import { sanitizeHtml } from './utilts.js'
 import { renderComments } from './renderComments.js'
-import { postComment } from './api.js'
+import { postComment, fetchComments } from './api.js'
 
 export const initEventHandlers = () => {
     const authorInput = document.getElementById('author')
@@ -31,6 +31,11 @@ const handleAddComment = (authorInput, commentTextInput) => {
     document.querySelector('.add-form').style.display = 'none'
 
     postComment(sanitizeHtml(text), sanitizeHtml(author))
+
+        .then(() => {
+            return fetchComments()
+        })
+
         .then((data) => {
             document.querySelector('.form-loading').style.display = 'none'
             document.querySelector('.add-form').style.display = 'flex'
@@ -45,9 +50,6 @@ const handleAddComment = (authorInput, commentTextInput) => {
             document.querySelector('.form-loading').style.display = 'none'
             document.querySelector('.add-form').style.display = 'flex'
 
-            if (error.message === error.message) {
-                alert('Нет соединения с интернетом')
-            }
 
             if (error.message === 'Ошибка сервера') {
                 alert('Ошибка сервера')
@@ -63,6 +65,8 @@ const handleAddComment = (authorInput, commentTextInput) => {
                     authorInput.classList.remove('-error')
                     commentTextInput.classList.remove('-error')
                 }, 2000)
+            } else {
+                alert('Нет соединения с интернетом')
             }
         })
 }
