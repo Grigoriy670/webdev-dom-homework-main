@@ -28,22 +28,16 @@ export const postComment = (text, name) => {
             name,
         }),
     }).then((response) => {
-        if (response.status === 500){
-            throw new Error("ошибка сервера");
-            
+        if (response.status === 500) {
+            throw new Error('ошибка сервера')
         }
 
-        if(response.status === 400){
-            throw new Error("Неверный запрос");
-            
+        if (response.status === 400) {
+            throw new Error('Неверный запрос')
         }
 
-         if(response.status === 201){
-            return response.json();
-            
+        if (response.status === 201) {
+            return response.json()
         }
-
-        
-
     })
 }

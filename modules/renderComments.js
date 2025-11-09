@@ -5,9 +5,9 @@ const commentsContainer = document.getElementById('comments-container')
 
 export const renderComments = () => {
     commentsContainer.innerHTML = ''
-    
+
     const sortedComments = [...comments].sort(
-        (a, b) => new Date(a.date) - new Date(b.date),
+        (a, b) => new Date(a.date) - new Date(b.date)
     )
 
     sortedComments.forEach((comment) => {
@@ -18,7 +18,7 @@ export const renderComments = () => {
 
 const createCommentElement = (comment) => {
     const commentElement = document.createElement('li')
-    
+
     commentElement.className = 'comment'
     commentElement.dataset.id = comment.id
 
@@ -33,7 +33,9 @@ const createCommentElement = (comment) => {
         <div class="comment-footer">
             <div class="likes">
                 <span class="likes-counter">${comment.likes}</span>
-                <button class="like-button ${comment.liked ? '-active-like' : ''}"></button>
+                <button class="like-button ${
+                    comment.liked ? '-active-like' : ''
+                }"></button>
             </div>
         </div>
         <div class="remove"></div>
@@ -57,6 +59,6 @@ const handleCommentClick = (comment) => {
     commentTextInput.focus()
     commentTextInput.setSelectionRange(
         commentTextInput.value.length,
-        commentTextInput.value.length,
+        commentTextInput.value.length
     )
 }

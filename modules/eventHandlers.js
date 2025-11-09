@@ -9,7 +9,7 @@ export const initEventHandlers = () => {
     const addCommentBtn = document.getElementById('add-comment')
 
     addCommentBtn.addEventListener('click', () =>
-        handleAddComment(authorInput, commentTextInput),
+        handleAddComment(authorInput, commentTextInput)
     )
 
     commentTextInput.addEventListener('keypress', (e) => {
@@ -31,7 +31,6 @@ const handleAddComment = (authorInput, commentTextInput) => {
     document.querySelector('.add-form').style.display = 'none'
 
     postComment(sanitizeHtml(text), sanitizeHtml(author))
-
         .then(() => {
             return fetchComments()
         })
@@ -46,10 +45,8 @@ const handleAddComment = (authorInput, commentTextInput) => {
             commentTextInput.value = ''
         })
         .catch((error) => {
-            
             document.querySelector('.form-loading').style.display = 'none'
             document.querySelector('.add-form').style.display = 'flex'
-
 
             if (error.message === 'Ошибка сервера') {
                 alert('Ошибка сервера')
