@@ -1,4 +1,4 @@
-import { comments, toggleLike, removeComment } from './comments.js'
+import { comments, toggleLike } from './comments.js'
 import { formatDate } from './utilts.js'
 
 const commentsContainer = document.getElementById('comments-container')
@@ -7,7 +7,7 @@ export const renderComments = () => {
     commentsContainer.innerHTML = ''
 
     const sortedComments = [...comments].sort(
-        (a, b) => new Date(b.date) - new Date(a.date),
+        (a, b) => new Date(a.date) - new Date(b.date)
     )
 
     sortedComments.forEach((comment) => {
@@ -18,12 +18,13 @@ export const renderComments = () => {
 
 const createCommentElement = (comment) => {
     const commentElement = document.createElement('li')
+
     commentElement.className = 'comment'
     commentElement.dataset.id = comment.id
 
     commentElement.innerHTML = `
         <div class="comment-header">
-            <div>${comment.author}</div>
+            <div>${comment.name}</div>
             <div>${formatDate(comment.date)}</div>
         </div>
         <div class="comment-body">
@@ -32,7 +33,9 @@ const createCommentElement = (comment) => {
         <div class="comment-footer">
             <div class="likes">
                 <span class="likes-counter">${comment.likes}</span>
-                <button class="like-button ${comment.liked ? '-active-like' : ''}"></button>
+                <button class="like-button ${
+                    comment.liked ? '-active-like' : ''
+                }"></button>
             </div>
         </div>
         <div class="remove"></div>
@@ -47,24 +50,15 @@ const createCommentElement = (comment) => {
         renderComments()
     })
 
-    const removeBtn = commentElement.querySelector('.remove')
-    removeBtn.addEventListener('click', (e) => {
-        e.stopPropagation()
-        if (confirm('Вы уверены, что хотите удалить этот комментарий?')) {
-            removeComment(comment.id)
-            renderComments()
-        }
-    })
-
     return commentElement
 }
 
 const handleCommentClick = (comment) => {
     const commentTextInput = document.getElementById('comment-text')
-    commentTextInput.value = `@${comment.author}, ${comment.text}\n`
+    commentTextInput.value = `@${comment.name}, ${comment.text}\n`
     commentTextInput.focus()
     commentTextInput.setSelectionRange(
         commentTextInput.value.length,
-        commentTextInput.value.length,
+        commentTextInput.value.length
     )
 }

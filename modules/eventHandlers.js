@@ -1,6 +1,7 @@
-import { comments, addComment } from './comments.js'
+import { updateComments } from './comments.js'
 import { sanitizeHtml } from './utilts.js'
 import { renderComments } from './renderComments.js'
+import { postComment, fetchComments } from './api.js'
 
 export const initEventHandlers = () => {
     const authorInput = document.getElementById('author')
@@ -8,7 +9,7 @@ export const initEventHandlers = () => {
     const addCommentBtn = document.getElementById('add-comment')
 
     addCommentBtn.addEventListener('click', () =>
-        handleAddComment(authorInput, commentTextInput),
+        handleAddComment(authorInput, commentTextInput)
     )
 
     commentTextInput.addEventListener('keypress', (e) => {
@@ -26,19 +27,43 @@ const handleAddComment = (authorInput, commentTextInput) => {
         alert('Пожалуйста, заполните все поля')
         return
     }
+    document.querySelector('.form-loading').style.display = 'block'
+    document.querySelector('.add-form').style.display = 'none'
 
-    const newComment = {
-        id: Date.now(),
-        author: sanitizeHtml(author),
-        text: sanitizeHtml(text),
-        date: new Date().toISOString(),
-        likes: 0,
-        liked: false,
-    }
+    postComment(sanitizeHtml(text), sanitizeHtml(author))
+        .then(() => {
+            return fetchComments()
+        })
 
-    addComment(newComment)
-    renderComments()
+        .then((data) => {
+            document.querySelector('.form-loading').style.display = 'none'
+            document.querySelector('.add-form').style.display = 'flex'
 
-    authorInput.value = ''
-    commentTextInput.value = ''
+            updateComments(data)
+            renderComments()
+            authorInput.value = ''
+            commentTextInput.value = ''
+        })
+        .catch((error) => {
+            document.querySelector('.form-loading').style.display = 'none'
+            document.querySelector('.add-form').style.display = 'flex'
+
+            if (error.message === 'Ошибка сервера') {
+                alert('Ошибка сервера')
+            }
+
+            if (error.message === 'Неверный запрос') {
+                alert('Имя и комментарий должны быть не короче 3х символов')
+
+                authorInput.classList.add('-error')
+                commentTextInput.classList.add('-error')
+
+                setTimeout(() => {
+                    authorInput.classList.remove('-error')
+                    commentTextInput.classList.remove('-error')
+                }, 2000)
+            } else {
+                alert('Нет соединения с интернетом')
+            }
+        })
 }
